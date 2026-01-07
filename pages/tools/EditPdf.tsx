@@ -252,33 +252,34 @@ const EditPdf: React.FC = () => {
   return (
     <div className="bg-slate-50 min-h-screen flex flex-col">
       {/* Dynamic Studio Header */}
-      <div className="bg-white border-b-2 border-red-600 px-6 py-4 flex items-center justify-between sticky top-16 z-50 shadow-sm">
-        <div className="flex items-center space-x-4">
+      <div className="bg-white border-b-2 border-red-600 px-4 sm:px-6 py-4 flex items-center justify-between sticky top-16 z-50 shadow-sm">
+        <div className="flex items-center space-x-2 sm:space-x-4">
           <Link to="/tools" className="p-2 hover:bg-slate-100 rounded-full transition-colors">
             <ChevronLeft className="w-5 h-5 text-slate-500" />
           </Link>
-          <div className="flex items-center space-x-3">
-            <div className="bg-red-600 p-2.5 rounded-2xl shadow-lg shadow-red-200">
-              <Edit3 className="w-6 h-6 text-white" />
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="bg-red-600 p-1.5 sm:p-2.5 rounded-2xl shadow-lg shadow-red-200">
+              <Edit3 className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-black text-slate-900 tracking-tight leading-none uppercase">
+              <h1 className="text-sm sm:text-xl font-black text-slate-900 tracking-tight leading-none uppercase truncate max-w-[100px] sm:max-w-none">
                 {pdfBuffer ? fileName : 'PDF Edit Studio'}
               </h1>
-              <span className="text-[10px] font-bold text-red-600 uppercase tracking-[0.2em]">Live Document Architect</span>
+              <span className="text-[8px] sm:text-[10px] font-bold text-red-600 uppercase tracking-[0.2em]">Live Document Architect</span>
             </div>
           </div>
         </div>
         
         {pdfBuffer && !isDone && (
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 sm:space-x-3">
              <button
               onClick={handleExport}
               disabled={isProcessing}
-              className="flex items-center px-8 py-3.5 bg-red-600 text-white rounded-2xl font-black text-sm hover:bg-red-700 shadow-xl shadow-red-600/20 active:scale-95 transition-all"
+              className="flex items-center px-4 sm:px-8 py-2 sm:py-3.5 bg-red-600 text-white rounded-2xl font-black text-xs sm:text-sm hover:bg-red-700 shadow-xl shadow-red-600/20 active:scale-95 transition-all"
             >
               {isProcessing ? <RefreshCw className="animate-spin mr-2 w-4 h-4" /> : <Save className="mr-2 w-4 h-4" />}
-              Export Result
+              <span className="hidden sm:inline">Export Result</span>
+              <span className="sm:hidden">Export</span>
             </button>
           </div>
         )}
@@ -286,290 +287,264 @@ const EditPdf: React.FC = () => {
 
       <div className="flex-grow flex flex-col lg:flex-row overflow-hidden">
         {!pdfBuffer ? (
-          <div className="flex-grow flex flex-col items-center justify-center p-12">
+          <div className="flex-grow flex flex-col items-center justify-center p-4 sm:p-12">
             <input type="file" ref={fileInputRef} onChange={handleFileLoad} className="hidden" accept=".pdf" />
             <div 
               onClick={() => fileInputRef.current?.click()}
-              className="max-w-2xl w-full aspect-[2/1] border-4 border-dashed border-slate-200 rounded-[3rem] flex flex-col items-center justify-center cursor-pointer hover:border-red-600 hover:bg-white transition-all group bg-slate-50 shadow-inner"
+              className="max-w-2xl w-full aspect-[2/1] border-4 border-dashed border-slate-200 rounded-[2rem] sm:rounded-[3rem] flex flex-col items-center justify-center cursor-pointer hover:border-red-600 hover:bg-white transition-all group bg-slate-50 shadow-inner p-4 text-center"
             >
-              <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mb-6 group-hover:bg-red-600 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm">
-                <FilePlus className="w-10 h-10 text-slate-300 group-hover:text-white" />
+              <div className="w-16 h-16 sm:w-24 sm:h-24 bg-white rounded-3xl flex items-center justify-center mb-4 sm:mb-6 shadow-xl group-hover:scale-110 transition-transform">
+                <FilePlus className="w-8 h-8 sm:w-12 sm:h-12 text-slate-300 group-hover:text-red-600" />
               </div>
-              <h2 className="text-2xl font-black text-slate-900 uppercase">Open Document</h2>
-              <p className="text-slate-400 mt-2 font-medium">Professional Visual PDF Editor</p>
+              <h2 className="text-xl sm:text-3xl font-black text-slate-900 uppercase">Open PDF to Edit</h2>
+              <p className="text-sm sm:text-lg text-slate-400 mt-2 font-medium">Click to select or drag and drop your file</p>
             </div>
           </div>
         ) : isDone ? (
-          <div className="flex-grow flex items-center justify-center bg-slate-100 p-8">
-             <div className="bg-white rounded-[4rem] shadow-2xl p-16 text-center border-4 border-white max-w-2xl w-full animate-fadeIn">
-                <div className="w-24 h-24 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
-                  <CheckCircle size={48} className="animate-bounce" />
-                </div>
-                <h2 className="text-5xl font-black text-slate-900 mb-4 tracking-tight">Edited Successfully</h2>
-                <p className="text-lg text-slate-500 mb-10 font-medium">All text and image layers have been flattened into your new document.</p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <a 
-                    href={exportUrl || '#'} 
-                    download={`edited-${fileName}`}
-                    className="bg-red-600 hover:bg-red-700 text-white font-black py-5 px-16 rounded-2xl text-xl flex items-center justify-center shadow-2xl shadow-red-600/30 transition-all hover:scale-[1.05]"
-                  >
-                    <Download className="mr-3" /> Download PDF
-                  </a>
-                  <button onClick={reset} className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-5 px-12 rounded-2xl text-xl transition-all">
-                    Edit New
-                  </button>
-                </div>
-             </div>
+          <div className="flex-grow flex items-center justify-center p-4 sm:p-12">
+            <div className="bg-white rounded-[3rem] shadow-2xl p-8 sm:p-20 text-center border-4 border-white max-w-2xl w-full animate-fadeIn">
+              <div className="w-20 h-20 sm:w-28 sm:h-28 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8 sm:mb-10 shadow-inner">
+                <CheckCircle size={48} className="sm:size-[56px] animate-bounce" />
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 mb-4 tracking-tight">Edit Complete!</h2>
+              <p className="text-base sm:text-xl text-slate-500 mb-8 sm:mb-12 max-w-md mx-auto leading-relaxed">Your modifications have been baked into a new professional PDF document.</p>
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <a 
+                  href={exportUrl!} 
+                  download={`edited-${fileName}`}
+                  className="bg-red-600 hover:bg-red-700 text-white font-black py-4 sm:py-5 px-8 sm:px-16 rounded-2xl text-lg sm:text-xl flex items-center justify-center shadow-2xl shadow-red-600/30 transition-all hover:scale-[1.05]"
+                >
+                  <Download className="mr-3" /> Download PDF
+                </a>
+                <button onClick={reset} className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-4 sm:py-5 px-8 sm:px-12 rounded-2xl text-lg sm:text-xl transition-all">Edit New</button>
+              </div>
+            </div>
           </div>
         ) : (
           <>
-            {/* Sidebar Left: Page Manager */}
-            <aside className="w-full lg:w-64 bg-slate-900 border-r border-white/5 flex flex-col p-4 overflow-y-auto scrollbar-hide">
-              <div className="flex items-center justify-between mb-6 px-2">
-                <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Page Manager</h3>
-                <button onClick={addBlankPage} className="p-1.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
-                  <PlusSquare size={16} />
-                </button>
-              </div>
+            {/* Editor Toolbar */}
+            <aside className="w-full lg:w-20 bg-slate-900 flex lg:flex-col items-center py-4 lg:py-8 space-x-4 lg:space-x-0 lg:space-y-6 px-4 lg:px-0 overflow-x-auto lg:overflow-x-visible">
+              <button 
+                onClick={addTextElement}
+                className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-2xl flex items-center justify-center text-white hover:bg-red-600 transition-all flex-shrink-0"
+                title="Add Text"
+              >
+                <Type size={20} />
+              </button>
+              <button 
+                onClick={() => imageUploadRef.current?.click()}
+                className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-2xl flex items-center justify-center text-white hover:bg-red-600 transition-all flex-shrink-0"
+                title="Add Image"
+              >
+                <ImageIcon size={20} />
+              </button>
+              <input type="file" ref={imageUploadRef} onChange={handleImageUpload} className="hidden" accept="image/*" />
               
-              <div className="space-y-4">
-                {pages.map((p, i) => (
-                  <div 
-                    key={p.id}
-                    onClick={() => setCurrentPageIdx(i)}
-                    className={`
-                      relative aspect-[1/1.414] rounded-xl border-2 transition-all cursor-pointer group p-3 flex flex-col justify-between
-                      ${currentPageIdx === i ? 'border-red-600 bg-red-600/10' : 'border-slate-800 bg-slate-800/50 hover:border-slate-700'}
-                    `}
-                  >
-                    <div className="flex justify-between items-start">
-                      <span className={`text-[10px] font-black ${currentPageIdx === i ? 'text-red-500' : 'text-slate-600'}`}>{i + 1}</span>
-                      <div className="opacity-0 group-hover:opacity-100 transition-opacity flex flex-col gap-1">
-                        <button onClick={(e) => { e.stopPropagation(); movePage(i, i-1); }} className="p-1 bg-slate-700 rounded text-white hover:bg-red-600"><GripVertical size={10} /></button>
-                        <button onClick={(e) => { e.stopPropagation(); setCurrentPageIdx(i); deleteCurrentPage(); }} className="p-1 bg-slate-700 rounded text-white hover:bg-red-600"><Trash2 size={10} /></button>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-center opacity-20 group-hover:opacity-40">
-                      {p.originalIndex !== null ? <FileText size={40} /> : <div className="w-10 h-10 border border-dashed border-white rounded"></div>}
-                    </div>
-                    <div className="text-[8px] text-center font-bold text-slate-700">
-                      {p.elements.length} Elements
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <div className="h-px w-8 lg:w-10 bg-white/10 hidden lg:block"></div>
+              
+              <button 
+                onClick={addBlankPage}
+                className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-2xl flex items-center justify-center text-white hover:bg-red-600 transition-all flex-shrink-0"
+                title="Add Blank Page"
+              >
+                <PlusSquare size={20} />
+              </button>
+              <button 
+                onClick={deleteCurrentPage}
+                className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-2xl flex items-center justify-center text-white hover:bg-red-500 transition-all flex-shrink-0"
+                title="Delete Page"
+              >
+                <Trash2 size={20} />
+              </button>
             </aside>
 
-            {/* Main Stage: Content Editor */}
-            <main className="flex-grow bg-slate-200 p-8 flex flex-col overflow-y-auto relative">
-              {/* Floating Toolbar */}
-              <div className="absolute top-8 left-1/2 -translate-x-1/2 flex items-center bg-white shadow-2xl rounded-2xl p-2 border border-slate-200 z-40 space-x-1">
-                <button onClick={addTextElement} className="flex items-center space-x-2 px-4 py-2 hover:bg-slate-100 rounded-xl text-slate-700 font-bold text-xs transition-all">
-                  <Type size={16} className="text-red-600" /> <span>Add Text</span>
-                </button>
-                <div className="w-px h-6 bg-slate-100"></div>
-                <button onClick={() => imageUploadRef.current?.click()} className="flex items-center space-x-2 px-4 py-2 hover:bg-slate-100 rounded-xl text-slate-700 font-bold text-xs transition-all">
-                  <ImageIcon size={16} className="text-red-600" /> <span>Add Image</span>
-                </button>
-                <input type="file" ref={imageUploadRef} onChange={handleImageUpload} className="hidden" accept="image/*" />
-              </div>
+            {/* Main Canvas Area */}
+            <main className="flex-grow bg-slate-200 p-4 sm:p-12 overflow-auto relative">
+              <div className="max-w-4xl mx-auto flex flex-col items-center">
+                {/* Page Controls */}
+                <div className="flex items-center space-x-6 mb-8 bg-white px-6 py-3 rounded-2xl shadow-xl border border-slate-100">
+                  <button 
+                    disabled={currentPageIdx === 0}
+                    onClick={() => setCurrentPageIdx(currentPageIdx - 1)}
+                    className="p-2 hover:bg-slate-100 rounded-xl disabled:opacity-20 transition-colors"
+                  >
+                    <ChevronLeft />
+                  </button>
+                  <div className="flex flex-col items-center">
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Page</span>
+                    <span className="text-lg font-black text-slate-900">{currentPageIdx + 1} / {pages.length}</span>
+                  </div>
+                  <button 
+                    disabled={currentPageIdx === pages.length - 1}
+                    onClick={() => setCurrentPageIdx(currentPageIdx + 1)}
+                    className="p-2 hover:bg-slate-100 rounded-xl disabled:opacity-20 transition-colors"
+                  >
+                    <ChevronRight />
+                  </button>
+                </div>
 
-              {/* Page Sheet */}
-              <div className="flex-grow flex items-center justify-center mt-12">
+                {/* The Page Canvas */}
                 <div 
-                  className="w-full max-w-[600px] aspect-[1/1.414] bg-white shadow-2xl relative overflow-hidden ring-1 ring-slate-900/10 cursor-crosshair"
+                  className="bg-white shadow-2xl relative overflow-hidden"
+                  style={{ width: '100%', maxWidth: '595px', aspectRatio: '595/841' }}
                   onClick={() => setSelectedElementId(null)}
                 >
-                  {/* Mock Background for Original Content */}
-                  <div className="absolute inset-0 opacity-10 pointer-events-none p-10 select-none">
-                    {pages[currentPageIdx]?.originalIndex !== null ? (
-                      <div className="space-y-6">
-                        <div className="w-full h-4 bg-slate-200 rounded"></div>
-                        <div className="w-3/4 h-4 bg-slate-200 rounded"></div>
-                        <div className="w-5/6 h-4 bg-slate-200 rounded"></div>
-                        <div className="w-full h-32 bg-slate-100 rounded"></div>
-                      </div>
-                    ) : (
-                      <div className="h-full flex items-center justify-center border-2 border-dashed border-slate-100 rounded-3xl">
-                        <span className="text-slate-200 font-black uppercase text-xl">Blank Studio Page</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Layers (Elements) */}
                   {pages[currentPageIdx]?.elements.map((el) => (
                     <div
                       key={el.id}
                       onClick={(e) => { e.stopPropagation(); setSelectedElementId(el.id); }}
-                      className={`
-                        absolute p-2 group transition-all
-                        ${selectedElementId === el.id ? 'ring-2 ring-red-600 ring-offset-2 z-50' : 'hover:ring-1 hover:ring-red-300'}
-                      `}
+                      className={`absolute cursor-move group ${selectedElementId === el.id ? 'ring-2 ring-red-600 ring-offset-2' : ''}`}
                       style={{ 
                         left: `${el.x}%`, 
-                        top: `${el.y}%`, 
-                        transform: 'translate(-50%, -50%)',
-                        cursor: selectedElementId === el.id ? 'move' : 'pointer'
-                      }}
-                      draggable
-                      onDragEnd={(e) => {
-                         const rect = (e.target as HTMLElement).parentElement?.getBoundingClientRect();
-                         if (rect) {
-                            updateSelectedElement({
-                               x: Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100)),
-                               y: Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100))
-                            });
-                         }
+                        top: `${el.y}%`,
+                        transform: 'translate(-50%, -50%)'
                       }}
                     >
                       {el.type === 'text' ? (
                         <div 
-                          className="outline-none min-w-[10px] whitespace-pre"
-                          contentEditable
-                          onBlur={(e) => updateSelectedElement({ content: e.currentTarget.textContent || '' })}
-                          style={{
-                            fontSize: `${el.fontSize}px`,
+                          className="outline-none whitespace-nowrap px-2 py-1"
+                          style={{ 
+                            fontSize: `${el.fontSize}px`, 
                             color: el.color,
                             fontWeight: el.isBold ? 'bold' : 'normal',
-                            fontStyle: el.isItalic ? 'italic' : 'normal',
-                            fontFamily: 'sans-serif'
+                            fontStyle: el.isItalic ? 'italic' : 'normal'
                           }}
+                          contentEditable
+                          suppressContentEditableWarning
+                          onBlur={(e) => updateSelectedElement({ content: e.currentTarget.textContent || '' })}
                         >
                           {el.content}
                         </div>
                       ) : (
-                        <div className="relative group/img">
-                          <img src={el.content} style={{ width: el.width, height: el.height }} className="object-contain" />
-                          {selectedElementId === el.id && (
-                             <div className="absolute -bottom-2 -right-2 w-4 h-4 bg-red-600 rounded-full cursor-nwse-resize"></div>
-                          )}
-                        </div>
+                        <img 
+                          src={el.content} 
+                          alt="user upload" 
+                          style={{ width: el.width, height: el.height }}
+                          className="pointer-events-none"
+                        />
                       )}
-
+                      
                       {selectedElementId === el.id && (
-                         <button 
-                            onClick={(e) => { e.stopPropagation(); removeElement(el.id); }}
-                            className="absolute -top-4 -right-4 w-6 h-6 bg-white border border-slate-200 text-red-600 rounded-full flex items-center justify-center shadow-lg hover:bg-red-600 hover:text-white transition-all"
-                         >
-                            <Trash2 size={12} />
-                         </button>
+                        <div className="absolute -top-10 left-1/2 -translate-x-1/2 flex items-center bg-slate-900 rounded-lg p-1 shadow-xl space-x-1">
+                          <button onClick={() => removeElement(el.id)} className="p-1.5 text-white hover:text-red-500"><Trash2 size={14} /></button>
+                          <div className="w-px h-4 bg-white/20"></div>
+                          <div className="flex items-center space-x-1 px-2">
+                            <GripVertical size={14} className="text-white/40" />
+                          </div>
+                        </div>
                       )}
                     </div>
                   ))}
+                  
+                  {/* Page Watermark/Info */}
+                  <div className="absolute bottom-4 right-4 text-[8px] font-black text-slate-200 uppercase tracking-widest pointer-events-none">
+                    {pages[currentPageIdx]?.originalIndex !== null ? 'Original PDF Layer' : 'New Blank Layer'}
+                  </div>
                 </div>
               </div>
             </main>
 
-            {/* Right Sidebar: Properties */}
-            <aside className="w-full lg:w-80 bg-white border-l border-slate-200 p-6 space-y-8 overflow-y-auto scrollbar-hide">
-              <section>
-                <div className="flex items-center space-x-2 mb-6">
-                  <FontIcon className="w-4 h-4 text-red-600" />
-                  <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-900">Properties</h3>
+            {/* Element Properties Sidebar */}
+            {currentElement && (
+              <aside className="w-full lg:w-72 bg-white border-t lg:border-t-0 lg:border-l border-slate-200 p-6 space-y-8 overflow-y-auto">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Properties</h3>
+                  <button onClick={() => setSelectedElementId(null)} className="text-slate-300 hover:text-slate-900"><X size={16} /></button>
                 </div>
 
-                {!selectedElementId ? (
-                   <div className="bg-slate-50 border border-dashed border-slate-200 p-8 rounded-[2rem] text-center">
-                      <MousePointer2 className="w-8 h-8 text-slate-300 mx-auto mb-4" />
-                      <p className="text-[10px] font-black text-slate-400 uppercase leading-relaxed">Select an element to edit its properties</p>
-                   </div>
+                {currentElement.type === 'text' ? (
+                  <div className="space-y-6">
+                    <div>
+                      <label className="text-[10px] font-black text-slate-400 uppercase block mb-3">Typography</label>
+                      <div className="flex items-center space-x-2">
+                        <button 
+                          onClick={() => updateSelectedElement({ isBold: !currentElement.isBold })}
+                          className={`p-3 rounded-xl border transition-all ${currentElement.isBold ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-400 border-slate-100'}`}
+                        >
+                          <Bold size={16} />
+                        </button>
+                        <button 
+                          onClick={() => updateSelectedElement({ isItalic: !currentElement.isItalic })}
+                          className={`p-3 rounded-xl border transition-all ${currentElement.isItalic ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-400 border-slate-100'}`}
+                        >
+                          <Italic size={16} />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between text-[10px] font-black text-slate-400 uppercase mb-2">
+                        <span>Font Size</span>
+                        <span className="text-red-600">{currentElement.fontSize}px</span>
+                      </div>
+                      <input 
+                        type="range" min="8" max="72" 
+                        value={currentElement.fontSize} 
+                        onChange={(e) => updateSelectedElement({ fontSize: parseInt(e.target.value) })}
+                        className="w-full accent-red-600 h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-[10px] font-black text-slate-400 uppercase block mb-2">Text Color</label>
+                      <div className="flex items-center space-x-3 bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                        <input 
+                          type="color" 
+                          value={currentElement.color} 
+                          onChange={(e) => updateSelectedElement({ color: e.target.value })}
+                          className="w-8 h-8 rounded-lg border-none bg-transparent cursor-pointer"
+                        />
+                        <span className="text-xs font-mono font-bold text-slate-900 uppercase">{currentElement.color}</span>
+                      </div>
+                    </div>
+                  </div>
                 ) : (
-                  <div className="space-y-6 animate-fadeIn">
-                    {currentElement?.type === 'text' && (
-                      <>
-                        <div className="space-y-4">
-                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">Text Styling</label>
-                          <div className="flex bg-slate-100 p-1.5 rounded-2xl">
-                             <button 
-                                onClick={() => updateSelectedElement({ isBold: !currentElement.isBold })}
-                                className={`flex-grow p-3 rounded-xl transition-all ${currentElement.isBold ? 'bg-white text-red-600 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
-                             >
-                                <Bold size={18} />
-                             </button>
-                             <button 
-                                onClick={() => updateSelectedElement({ isItalic: !currentElement.isItalic })}
-                                className={`flex-grow p-3 rounded-xl transition-all ${currentElement.isItalic ? 'bg-white text-red-600 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
-                             >
-                                <Italic size={18} />
-                             </button>
-                          </div>
-                        </div>
-
-                        <div className="space-y-4">
-                          <div className="flex justify-between text-[10px] font-black text-slate-400 uppercase">
-                            <span>Font Size</span>
-                            <span className="text-red-600">{currentElement.fontSize}px</span>
-                          </div>
-                          <input 
-                            type="range" min="8" max="120" step="1" 
-                            value={currentElement.fontSize}
-                            onChange={(e) => updateSelectedElement({ fontSize: parseInt(e.target.value) })}
-                            className="w-full accent-red-600 h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer"
-                          />
-                        </div>
-
-                        <div className="space-y-4">
-                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">Text Color</label>
-                          <div className="flex items-center space-x-3 bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                            <input 
-                              type="color" 
-                              value={currentElement.color}
-                              onChange={(e) => updateSelectedElement({ color: e.target.value })}
-                              className="w-10 h-10 bg-transparent cursor-pointer border-none"
-                            />
-                            <span className="text-sm font-black text-slate-900 uppercase">{currentElement.color}</span>
-                          </div>
-                        </div>
-                      </>
-                    )}
-
-                    {currentElement?.type === 'image' && (
-                      <>
-                        <div className="space-y-4">
-                           <div className="flex justify-between text-[10px] font-black text-slate-400 uppercase">
-                              <span>Image Width</span>
-                              <span className="text-red-600">{currentElement.width}px</span>
-                           </div>
-                           <input 
-                              type="range" min="20" max="600" step="1" 
-                              value={currentElement.width}
-                              onChange={(e) => {
-                                 const val = parseInt(e.target.value);
-                                 updateSelectedElement({ width: val, height: val }); // Aspect ratio locked for simplicity
-                              }}
-                              className="w-full accent-red-600 h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer"
-                           />
-                        </div>
-                      </>
-                    )}
-
-                    <div className="pt-6 border-t border-slate-100">
-                       <button 
-                          onClick={() => removeElement(selectedElementId)}
-                          className="w-full py-4 bg-slate-100 text-red-600 font-black rounded-2xl uppercase text-[10px] tracking-[0.2em] hover:bg-red-50 transition-colors flex items-center justify-center space-x-2"
-                       >
-                          <Trash2 size={14} /> <span>Delete Element</span>
-                       </button>
+                  <div className="space-y-6">
+                    <div>
+                      <div className="flex justify-between text-[10px] font-black text-slate-400 uppercase mb-2">
+                        <span>Width</span>
+                        <span className="text-red-600">{currentElement.width}px</span>
+                      </div>
+                      <input 
+                        type="range" min="20" max="500" 
+                        value={currentElement.width} 
+                        onChange={(e) => {
+                          const w = parseInt(e.target.value);
+                          const ratio = currentElement.height! / currentElement.width!;
+                          updateSelectedElement({ width: w, height: w * ratio });
+                        }}
+                        className="w-full accent-red-600 h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer"
+                      />
                     </div>
                   </div>
                 )}
-              </section>
 
-              <section className="bg-slate-900 p-6 rounded-[2rem] text-white">
-                <div className="flex items-center space-x-2 mb-3">
-                  <Move size={14} className="text-red-500" />
-                  <h4 className="text-[10px] font-black uppercase tracking-widest">Editor Tip</h4>
+                <div className="pt-6 border-t border-slate-100">
+                  <label className="text-[10px] font-black text-slate-400 uppercase block mb-4">Positioning</label>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                      <span className="text-[8px] font-black text-slate-300 uppercase block">X-Axis</span>
+                      <input 
+                        type="number" value={Math.round(currentElement.x)} 
+                        onChange={(e) => updateSelectedElement({ x: parseInt(e.target.value) })}
+                        className="bg-transparent font-bold text-slate-900 w-full outline-none"
+                      />
+                    </div>
+                    <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                      <span className="text-[8px] font-black text-slate-300 uppercase block">Y-Axis</span>
+                      <input 
+                        type="number" value={Math.round(currentElement.y)} 
+                        onChange={(e) => updateSelectedElement({ y: parseInt(e.target.value) })}
+                        className="bg-transparent font-bold text-slate-900 w-full outline-none"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <p className="text-[11px] text-slate-400 leading-relaxed font-medium">
-                  Elements are positioned relative to page dimensions. Drag items to move them and use the property panel to style your document.
-                </p>
-              </section>
-            </aside>
+              </aside>
+            )}
           </>
         )}
       </div>
-
-      {/* Modern Status Footer */}
 
       <div className="max-w-4xl mx-auto pb-20 px-4">
         <div className="bg-white rounded-[3rem] shadow-xl border border-slate-100 p-12 space-y-12 text-slate-700 leading-relaxed">
@@ -677,13 +652,13 @@ const EditPdf: React.FC = () => {
         </div>
       </div>
 
-      <footer className="bg-slate-900 text-slate-500 text-[10px] font-black uppercase tracking-widest px-8 py-4 flex items-center justify-between border-t border-white/5">
+      <footer className="bg-slate-900 text-slate-500 text-[10px] font-black uppercase tracking-widest px-8 py-4 flex items-center justify-between border-t border-white/5 mt-auto">
         <div className="flex items-center space-x-10">
           <div className="flex items-center space-x-2 text-slate-300">
-            <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse"></span>
-            <span>Studio Engine v3.5 Active</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+            <span>Studio v5.0 Active</span>
           </div>
-          <div className="hidden md:block">Visual Coordinate System Mapped</div>
+          <div className="hidden md:block text-slate-600">Reconstructing Headers & Paragraph Flow</div>
         </div>
         <div className="flex items-center space-x-4">
           <span className="text-red-500 font-black">texttopdf.online</span>

@@ -91,26 +91,26 @@ const TextToPdf: React.FC = () => {
   return (
     <div className="bg-slate-100 min-h-screen flex flex-col">
       {/* Branded Header */}
-      <div className="bg-white border-b-2 border-red-600 px-6 py-4 flex items-center justify-between sticky top-16 z-40 shadow-sm">
-        <div className="flex items-center space-x-4">
+      <div className="bg-white border-b-2 border-red-600 px-4 sm:px-6 py-4 flex items-center justify-between sticky top-16 z-40 shadow-sm">
+        <div className="flex items-center space-x-2 sm:space-x-4">
           <Link to="/tools" className="p-2 hover:bg-slate-100 rounded-full transition-colors">
             <ArrowLeft className="w-5 h-5 text-slate-500" />
           </Link>
-          <div className="flex items-center space-x-3">
-            <div className="bg-red-600 p-2 rounded-xl shadow-lg shadow-red-200">
-              <FileText className="w-6 h-6 text-white" />
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="bg-red-600 p-1.5 sm:p-2 rounded-xl shadow-lg shadow-red-200">
+              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-black text-slate-900 tracking-tight leading-none">TextToPDF.online</h1>
-              <span className="text-xs font-bold text-red-600 uppercase tracking-widest">Text to PDF Studio</span>
+              <h1 className="text-sm sm:text-xl font-black text-slate-900 tracking-tight leading-none">TextToPDF.online</h1>
+              <span className="text-[8px] sm:text-xs font-bold text-red-600 uppercase tracking-widest">Text to PDF Studio</span>
             </div>
           </div>
         </div>
         
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 sm:space-x-3">
           <button 
             onClick={clearText}
-            className="hidden sm:block text-slate-500 hover:text-red-600 px-4 py-2 text-sm font-bold transition-colors"
+            className="hidden md:block text-slate-500 hover:text-red-600 px-4 py-2 text-sm font-bold transition-colors"
           >
             Clear Editor
           </button>
@@ -118,14 +118,15 @@ const TextToPdf: React.FC = () => {
             onClick={handleGenerate}
             disabled={!text.trim() || isProcessing}
             className={`
-              flex items-center px-6 py-3 rounded-xl font-black text-sm transition-all
+              flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-black text-xs sm:text-sm transition-all
               ${!text.trim() || isProcessing 
                 ? 'bg-slate-200 text-slate-400 cursor-not-allowed' 
                 : 'bg-red-600 text-white hover:bg-red-700 shadow-xl shadow-red-600/20 active:scale-95'}
             `}
           >
             {isProcessing ? <RefreshCw className="animate-spin mr-2 w-4 h-4" /> : <Layers className="mr-2 w-4 h-4" />}
-            Generate PDF
+            <span className="hidden sm:inline">Generate PDF</span>
+            <span className="sm:hidden">Generate</span>
           </button>
         </div>
       </div>
@@ -133,7 +134,7 @@ const TextToPdf: React.FC = () => {
       {!isDone ? (
         <div className="flex flex-col lg:flex-row flex-grow overflow-hidden">
           {/* Enhanced Settings Sidebar */}
-          <aside className="w-full lg:w-80 bg-white border-r border-slate-200 overflow-y-auto p-6 space-y-8 scrollbar-hide">
+          <aside className="w-full lg:w-80 bg-white border-b lg:border-b-0 lg:border-r border-slate-200 overflow-y-auto p-4 sm:p-6 space-y-6 sm:space-y-8 scrollbar-hide">
             {/* Typography Section */}
             <section className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
               <div className="flex items-center justify-between mb-4">
@@ -235,11 +236,11 @@ const TextToPdf: React.FC = () => {
                 </div>
                 <div>
                   <div className="flex justify-between text-[10px] font-black text-slate-400 uppercase mb-2">
-                    <span>Padding (mm)</span>
+                    <span>Margins</span>
                     <span className="text-red-600">{margin}mm</span>
                   </div>
                   <input 
-                    type="range" min="5" max="50" step="5" 
+                    type="range" min="5" max="50" step="1" 
                     value={margin} onChange={(e) => setMargin(parseInt(e.target.value))}
                     className="w-full accent-red-600 h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer"
                   />
@@ -248,110 +249,68 @@ const TextToPdf: React.FC = () => {
             </section>
           </aside>
 
-          {/* Editor & Preview Workspace */}
-          <main className="flex-grow flex flex-col md:flex-row p-4 md:p-8 gap-8 bg-slate-100 overflow-y-auto scrollbar-hide">
-            {/* Professional Text Area */}
-            <div className="w-full md:w-1/2 flex flex-col min-h-[400px]">
-              <div className="flex items-center justify-between mb-4 bg-slate-900 text-white px-5 py-2.5 rounded-t-2xl shadow-lg">
-                <div className="flex items-center space-x-2">
-                  <FileCode size={14} className="text-red-500" />
-                  <span className="text-[10px] font-black uppercase tracking-widest">Document Editor</span>
-                </div>
-                <span className="text-[10px] font-mono opacity-60">{text.length} chars</span>
-              </div>
+          {/* Main Editor Area */}
+          <main className="flex-grow p-4 sm:p-8 overflow-y-auto bg-slate-200/50">
+            <div 
+              className="max-w-[210mm] mx-auto min-h-[297mm] shadow-2xl transition-all duration-300 relative"
+              style={{ 
+                backgroundColor: bgColor,
+                padding: `${margin}mm`,
+              }}
+            >
               <textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                className="flex-grow w-full p-8 rounded-b-2xl bg-white shadow-xl border-x border-b border-slate-200 outline-none focus:border-red-600 transition-all text-slate-700 resize-none font-medium text-lg leading-relaxed"
-                placeholder="Start typing your document..."
-              />
-            </div>
-
-            {/* Live Document Preview */}
-            <div className="w-full md:w-1/2 flex flex-col items-center">
-              <div className="w-full flex items-center justify-between mb-4 px-4 py-2 bg-white rounded-xl shadow-sm border border-slate-200">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">A4 Live Sheet Preview</span>
-                <div className="flex space-x-2">
-                  <div className="w-2 h-2 rounded-full bg-red-400"></div>
-                  <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
-                  <div className="w-2 h-2 rounded-full bg-green-400"></div>
-                </div>
-              </div>
-              
-              <div 
-                className="w-full bg-white shadow-2xl rounded-sm aspect-[1/1.414] relative overflow-hidden transition-all duration-500 transform origin-top hover:shadow-red-900/10 border border-slate-200"
-                style={{ 
-                  backgroundColor: bgColor,
-                  padding: `${margin}mm`, // Using mm to match jsPDF unit
-                  display: 'flex',
-                  flexDirection: 'column'
+                placeholder="Start typing your document content here..."
+                className="w-full h-full min-h-[250mm] bg-transparent border-none outline-none resize-none overflow-hidden"
+                style={{
+                  fontSize: `${fontSize}px`,
+                  lineHeight: lineHeight,
+                  fontFamily: fontFamily,
+                  color: textColor,
+                  textAlign: textAlign,
                 }}
-              >
-                <div 
-                  className="w-full h-full whitespace-pre-wrap break-words transition-all duration-300"
-                  style={{
-                    fontSize: `${fontSize}px`,
-                    lineHeight: lineHeight,
-                    fontFamily: fontFamily === 'helvetica' ? 'Inter, sans-serif' : fontFamily === 'times' ? 'serif' : 'monospace',
-                    color: textColor,
-                    textAlign: textAlign,
-                  }}
-                >
-                  {text || <span className="text-slate-200 italic font-normal">Start typing to see the magic...</span>}
-                </div>
-                
-                {/* Branding Watermark */}
-                <div className="absolute bottom-6 left-0 right-0 text-center opacity-10 select-none text-[8px] pointer-events-none uppercase font-black tracking-[1.5em] text-slate-900">
-                  TextToPDF.online
-                </div>
+              />
+              
+              {/* Page Indicator */}
+              <div className="absolute bottom-8 right-8 flex items-center space-x-2 text-[10px] font-black text-slate-300 uppercase tracking-widest pointer-events-none">
+                <FileCode size={14} />
+                <span>A4 Standard • 1 Page</span>
               </div>
             </div>
           </main>
         </div>
       ) : (
-        /* Enhanced Success Screen */
-        <div className="flex-grow flex items-center justify-center p-6 bg-gradient-to-br from-slate-100 to-red-50">
-          <div className="max-w-xl w-full bg-white rounded-[3rem] shadow-2xl p-12 text-center border-4 border-white relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-2 bg-red-600"></div>
-            <div className="w-28 h-28 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
-              <CheckCircle size={56} className="animate-pulse" />
+        /* Success Screen */
+        <div className="flex-grow flex items-center justify-center p-4 sm:p-8">
+          <div className="bg-white rounded-[3rem] shadow-2xl p-8 sm:p-16 text-center border-4 border-white max-w-2xl w-full animate-fadeIn">
+            <div className="w-20 h-20 sm:w-28 sm:h-28 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8 sm:mb-10 shadow-inner">
+              <CheckCircle size={48} className="sm:size-[56px] animate-bounce" />
             </div>
-            <h2 className="text-4xl font-black text-slate-900 mb-4 tracking-tight">Conversion Ready!</h2>
-            <p className="text-lg text-slate-500 mb-10 leading-relaxed max-w-sm mx-auto">
-              Your document has been styled and optimized. Ready to download your professional PDF?
-            </p>
             
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 mb-2 tracking-tight">PDF Generated</h2>
+            <p className="text-base sm:text-lg text-slate-500 mb-8 sm:mb-12 max-w-sm mx-auto leading-relaxed font-medium">
+              Your text has been successfully converted into a professional PDF document.
+            </p>
+
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <button
                 onClick={handleDownload}
-                className="bg-red-600 hover:bg-red-700 text-white font-black py-5 px-12 rounded-2xl text-xl flex items-center justify-center shadow-2xl shadow-red-600/30 transition-all hover:scale-[1.03] active:scale-95 group"
+                className="bg-red-600 hover:bg-red-700 text-white font-black py-4 sm:py-5 px-8 sm:px-16 rounded-2xl text-lg sm:text-xl flex items-center justify-center shadow-2xl shadow-red-600/30 transition-all hover:scale-[1.05] active:scale-95 group"
               >
                 <Download className="mr-3 group-hover:animate-bounce" />
                 Download PDF
               </button>
               <button
                 onClick={reset}
-                className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-5 px-10 rounded-2xl text-xl transition-all active:scale-95"
+                className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-4 sm:py-5 px-8 sm:px-12 rounded-2xl text-lg sm:text-xl transition-all"
               >
-                Go Back
+                Edit More
               </button>
-            </div>
-            
-            <div className="mt-12 pt-8 border-t border-slate-100 flex items-center justify-center space-x-6 text-slate-400">
-              <div className="flex items-center space-x-1">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-                <span className="text-[10px] font-black uppercase tracking-widest">High Quality</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
-                <span className="text-[10px] font-black uppercase tracking-widest">Secure SSL</span>
-              </div>
             </div>
           </div>
         </div>
       )}
-
-      {/* Modern Status Footer */}
 
       <div className="max-w-4xl mx-auto pb-20 px-4">
         <div className="bg-white rounded-[3rem] shadow-xl border border-slate-100 p-12 space-y-12 text-slate-700 leading-relaxed">
@@ -459,18 +418,16 @@ const TextToPdf: React.FC = () => {
         </div>
       </div>
 
-      <footer className="bg-slate-900 text-slate-500 text-[10px] font-black uppercase tracking-widest px-8 py-4 flex items-center justify-between">
-        <div className="flex items-center space-x-8">
-          <div className="flex items-center space-x-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-ping"></span>
-            <span className="text-slate-300">Engine: Text-to-Vector v3.1</span>
+      <footer className="bg-slate-900 text-slate-500 text-[10px] font-black uppercase tracking-widest px-8 py-4 flex items-center justify-between border-t border-white/5 mt-auto">
+        <div className="flex items-center space-x-10">
+          <div className="flex items-center space-x-2 text-slate-300">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+            <span>Studio v2.0 Active</span>
           </div>
-          <div className="hidden md:block">Real-time PDF Compiler Active</div>
+          <div className="hidden md:block text-slate-600">Real-time Layout Normalization</div>
         </div>
         <div className="flex items-center space-x-4">
-          <span>Client-Side Generation</span>
-          <div className="h-4 w-px bg-slate-800"></div>
-          <span className="text-red-500">texttopdf.online</span>
+          <span className="text-red-500 font-black">texttopdf.online</span>
         </div>
       </footer>
     </div>

@@ -83,6 +83,86 @@ const Blog: React.FC = () => {
       author: "Abdullah Dogar",
       category: "Workflow",
       image: "https://images.unsplash.com/photo-1521791136064-7986c2923216?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      title: "How to Edit PDF Files Online Without Software",
+      excerpt: "Editing PDFs doesn't have to be expensive. Learn how to use our free online editor to modify text and images.",
+      date: "June 01, 2024",
+      author: "Abdullah Dogar",
+      category: "Editing",
+      image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      title: "Converting Text to PDF: A Simple Guide",
+      excerpt: "Need to turn a plain text file into a professional PDF? Our text-to-PDF tool makes it easy and fast.",
+      date: "June 05, 2024",
+      author: "Abdullah Dogar",
+      category: "Conversion",
+      image: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      title: "The Benefits of Merging Multiple PDFs into One",
+      excerpt: "Keep your documents organized by merging related PDFs. Perfect for portfolios and project reports.",
+      date: "June 10, 2024",
+      author: "Abdullah Dogar",
+      category: "Organization",
+      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      title: "How to Password Protect Your Sensitive PDFs",
+      excerpt: "Security first! Learn how to add a strong password to your PDF files using our protection tool.",
+      date: "June 15, 2024",
+      author: "Abdullah Dogar",
+      category: "Security",
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      title: "Unlocking PDFs: How to Remove Forgotten Passwords",
+      excerpt: "Locked out of your own file? Our unlock tool helps you remove restrictions from PDF documents.",
+      date: "June 20, 2024",
+      author: "Abdullah Dogar",
+      category: "Security",
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      title: "Why JPG to PDF Conversion is Essential for Portfolios",
+      excerpt: "Turn your images into a single, professional PDF document. Ideal for artists and photographers.",
+      date: "June 25, 2024",
+      author: "Abdullah Dogar",
+      category: "Creative",
+      image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      title: "Splitting Large PDFs: A Step-by-Step Tutorial",
+      excerpt: "Only need a few pages from a massive PDF? Learn how to split your files quickly and easily.",
+      date: "July 01, 2024",
+      author: "Abdullah Dogar",
+      category: "Tutorial",
+      image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      title: "The Importance of Mobile-Friendly PDF Tools",
+      excerpt: "Work on the go! Discover why our tools are optimized for mobile devices and tablets.",
+      date: "July 05, 2024",
+      author: "Abdullah Dogar",
+      category: "Technology",
+      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      title: "How to Organize PDF Pages for Better Presentations",
+      excerpt: "Rearrange, rotate, and delete pages to create the perfect PDF layout for your next meeting.",
+      date: "July 10, 2024",
+      author: "Abdullah Dogar",
+      category: "Productivity",
+      image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      title: "Converting Word to PDF: Why Formatting Matters",
+      excerpt: "Ensure your documents look the same on every device by converting Word files to PDF.",
+      date: "July 15, 2024",
+      author: "Abdullah Dogar",
+      category: "Conversion",
+      image: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&q=80&w=800"
     }
   ];
 
