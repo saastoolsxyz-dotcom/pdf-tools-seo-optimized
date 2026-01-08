@@ -1,1 +1,4 @@
-User-agent: *\nAllow: /\nSitemap: https://texttopdf.online/sitemap.xml
+User-agent: *
+Allow: /
+Sitemap: https://texttopdf.online/sitemap.xml
+
