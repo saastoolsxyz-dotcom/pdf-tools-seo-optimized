@@ -74,13 +74,13 @@ const Contact: React.FC = () => {
             <div className="pt-8 border-t border-gray-100">
               <h3 className="font-bold text-slate-900 mb-4">Follow Our Updates</h3>
               <div className="flex space-x-4">
-                <a href="#" className="w-10 h-10 bg-slate-900 text-white rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors">
+                <a href="javascript:void(0)" className="w-10 h-10 bg-slate-900 text-white rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors">
                   <Twitter className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-slate-900 text-white rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors">
+                <a href="javascript:void(0)" className="w-10 h-10 bg-slate-900 text-white rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors">
                   <Linkedin className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-slate-900 text-white rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors">
+                <a href="javascript:void(0)" className="w-10 h-10 bg-slate-900 text-white rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors">
                   <Github className="w-5 h-5" />
                 </a>
               </div>

@@ -107,13 +107,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 Professional PDF tools for all your document needs. Convert, edit, merge, and manage PDFs online for free. No installation required.
               </p>
               <div className="flex space-x-4">
-                <a href="#" className="text-slate-400 hover:text-red-500 transition-colors bg-white/5 p-2 rounded-lg">
+                <a href="javascript:void(0)" className="text-slate-400 hover:text-red-500 transition-colors bg-white/5 p-2 rounded-lg">
                   <Facebook className="h-5 w-5" />
                 </a>
-                <a href="#" className="text-slate-400 hover:text-red-500 transition-colors bg-white/5 p-2 rounded-lg">
+                <a href="javascript:void(0)" className="text-slate-400 hover:text-red-500 transition-colors bg-white/5 p-2 rounded-lg">
                   <Twitter className="h-5 w-5" />
                 </a>
-                <a href="#" className="text-slate-400 hover:text-red-500 transition-colors bg-white/5 p-2 rounded-lg">
+                <a href="javascript:void(0)" className="text-slate-400 hover:text-red-500 transition-colors bg-white/5 p-2 rounded-lg">
                   <Linkedin className="h-5 w-5" />
                 </a>
               </div>
